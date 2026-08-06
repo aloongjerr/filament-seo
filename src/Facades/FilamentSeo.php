@@ -2,6 +2,7 @@
 
 namespace AloongJerr\FilamentSeo\Facades;
 
+use AloongJerr\FilamentSeo\Services\SeoManager;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -11,6 +12,6 @@ class FilamentSeo extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \AloongJerr\FilamentSeo\FilamentSeo::class;
+        return SeoManager::class;
     }
 }

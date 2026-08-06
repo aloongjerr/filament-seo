@@ -42,7 +42,10 @@
         "psr-4": {
             "AloongJerr\\FilamentSeo\\": "src/",
             "AloongJerr\\FilamentSeo\\Database\\Factories\\": "database/factories/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
