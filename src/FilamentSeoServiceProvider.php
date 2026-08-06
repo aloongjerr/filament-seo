@@ -2,10 +2,11 @@
 
 namespace AloongJerr\FilamentSeo;
 
-use Filament\Support\Assets\AlpineComponent;
+use AloongJerr\FilamentSeo\Commands\FilamentSeoCommand;
+use AloongJerr\FilamentSeo\Contracts\SeoManager as SeoManagerContract;
+use AloongJerr\FilamentSeo\Services\SeoManager;
+use AloongJerr\FilamentSeo\Testing\TestsFilamentSeo;
 use Filament\Support\Assets\Asset;
-use Filament\Support\Assets\Css;
-use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
@@ -13,14 +14,14 @@ use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use AloongJerr\FilamentSeo\Commands\FilamentSeoCommand;
-use AloongJerr\FilamentSeo\Testing\TestsFilamentSeo;
 
 class FilamentSeoServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-seo';
 
     public static string $viewNamespace = 'filament-seo';
+
+    public static string $assetPackageName = 'aloongjerr/filament-seo';
 
     public function configurePackage(Package $package): void
     {
@@ -58,7 +59,18 @@ class FilamentSeoServiceProvider extends PackageServiceProvider
         }
     }
 
-    public function packageRegistered(): void {}
+    public function packageRegistered(): void
+    {
+        $this->app->singleton(
+            SeoManager::class,
+            fn () => new SeoManager()
+        );
+
+        $this->app->alias(
+            SeoManagerContract::class,
+            SeoManager::class
+        );
+    }
 
     public function packageBooted(): void
     {
@@ -91,7 +103,7 @@ class FilamentSeoServiceProvider extends PackageServiceProvider
 
     protected function getAssetPackageName(): ?string
     {
-        return 'aloongjerr/filament-seo';
+        return static::$assetPackageName;
     }
 
     /**
@@ -146,7 +158,8 @@ class FilamentSeoServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            'create_filament-seo_table',
+            'create_seo_sites_table',
+            'create_seo_meta_table',
         ];
     }
 }
