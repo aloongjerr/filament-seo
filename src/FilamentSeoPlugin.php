@@ -9,7 +9,7 @@ class FilamentSeoPlugin implements Plugin
 {
     public function getId(): string
     {
-        return 'filament-seo';
+        return FilamentSeoServiceProvider::$name;
     }
 
     public function register(Panel $panel): void
