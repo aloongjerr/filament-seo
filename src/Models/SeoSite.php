@@ -2,9 +2,20 @@
 
 namespace AloongJerr\FilamentSeo\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property string $name
+ * @property string $domain
+ * @property bool $is_default
+ * @property bool $is_active
+ * @property SeoSetting|null $setting
+ * @method static active()
+ * @method static default()
+ */
 class SeoSite extends Model
 {
     protected $table = 'seo_sites';
@@ -24,17 +35,24 @@ class SeoSite extends Model
         ];
     }
 
-    public function scopeActive(Builder $query)
+    public function setting(): HasOne
+    {
+        return $this->hasOne(config('filament-seo.models.seo_setting'), 'seo_site_id');
+    }
+
+    #[Scope]
+    protected function active(Builder $query): Builder
     {
         return $query->where('is_active', true);
     }
 
-    public function scopeDefault(Builder $query): Builder
+    #[Scope]
+    protected function defaultSite(Builder $query): Builder
     {
         return $query->where('is_default', true);
     }
 
-    public function matchDomain(string $domain): bool
+    public function matchesDomain(string $domain): bool
     {
         return $this->domain === $domain;
     }

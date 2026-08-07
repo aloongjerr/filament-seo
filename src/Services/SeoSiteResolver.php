@@ -16,7 +16,7 @@ class SeoSiteResolver
             ->first()
             ?? SeoSite::query()
                 ->active()
-                ->default()
+                ->defaultSite()
                 ->first();
     }
 }

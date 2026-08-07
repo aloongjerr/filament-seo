@@ -21,4 +21,9 @@ return [
     */
 
     'cache' => true,
+
+    'models' => [
+        'seo_site' => \AloongJerr\FilamentSeo\Models\SeoSite::class,
+        'seo_setting' => \AloongJerr\FilamentSeo\Models\SeoSetting::class,
+    ]
 ];

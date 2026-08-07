@@ -1,13 +1,14 @@
 <?php
 
-use AloongJerr\FilamentSeo\Services\SeoManager;
+use AloongJerr\FilamentSeo\Contracts\SeoManager as SeoManagerContract;
+use AloongJerr\FilamentSeo\Services\SeoManager as SeoManagerService;
 
 if (! function_exists('seo')) {
     /**
-     * @return SeoManager
+     * @return SeoManagerService
      */
-    function seo(): SeoManager
+    function seo(): SeoManagerService
     {
-        return app(SeoManager::class);
+        return app(SeoManagerContract::class);
     }
 }

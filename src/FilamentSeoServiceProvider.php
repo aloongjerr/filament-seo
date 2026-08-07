@@ -5,12 +5,13 @@ namespace AloongJerr\FilamentSeo;
 use AloongJerr\FilamentSeo\Commands\FilamentSeoCommand;
 use AloongJerr\FilamentSeo\Contracts\SeoManager as SeoManagerContract;
 use AloongJerr\FilamentSeo\Services\SeoManager as SeoManagerService;
-use AloongJerr\FilamentSeo\Services\SeoSiteResolver;
+use AloongJerr\FilamentSeo\Services\SeoTitleGenerator;
 use AloongJerr\FilamentSeo\Testing\TestsFilamentSeo;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Foundation\Application;
 use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
@@ -62,14 +63,12 @@ class FilamentSeoServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
-        $this->app->singleton(
-            SeoManagerContract::class,
-            fn () => new SeoManagerService()
-        );
 
         $this->app->singleton(
-            SeoSiteResolver::class,
-            fn () => new SeoSiteResolver()
+            SeoManagerContract::class,
+            fn (Application $app) => new SeoManagerService(
+                $app->make(SeoTitleGenerator::class)
+            )
         );
 
         $this->app->alias(
@@ -165,7 +164,7 @@ class FilamentSeoServiceProvider extends PackageServiceProvider
     {
         return [
             'create_seo_sites_table',
-//            'create_seo_meta_table',
+            'create_seo_settings_table',
         ];
     }
 }
