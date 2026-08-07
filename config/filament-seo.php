@@ -1,5 +1,8 @@
 <?php
 
+use AloongJerr\FilamentSeo\Models\SeoSetting;
+use AloongJerr\FilamentSeo\Models\SeoSite;
+
 // config for AloongJerr/FilamentSeo
 return [
     /*
@@ -13,7 +16,6 @@ return [
 
     'default_site' => null,
 
-
     /*
     |--------------------------------------------------------------------------
     | Cache
@@ -21,4 +23,9 @@ return [
     */
 
     'cache' => true,
+
+    'models' => [
+        'seo_site' => SeoSite::class,
+        'seo_setting' => SeoSetting::class,
+    ],
 ];

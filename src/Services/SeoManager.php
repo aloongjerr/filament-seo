@@ -3,11 +3,25 @@
 namespace AloongJerr\FilamentSeo\Services;
 
 use AloongJerr\FilamentSeo\Contracts\SeoManager as SeoManagerContract;
+use AloongJerr\FilamentSeo\Renderer\SeoTitleTagRenderer;
+use Illuminate\Support\HtmlString;
 
 class SeoManager implements SeoManagerContract
 {
-    public function title(?string $title = null): ?string
+    public function __construct(
+        protected SeoTitleTagRenderer $titleRenderer,
+    ) {}
+
+    public function title(string $title): self
     {
-        return $title;
+
+        $this->titleRenderer->setValue($title);
+
+        return $this;
+    }
+
+    public function render(): HtmlString
+    {
+        return $this->titleRenderer->render();
     }
 }

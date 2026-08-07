@@ -2,6 +2,7 @@
 
 namespace AloongJerr\FilamentSeo\Tests;
 
+use AloongJerr\FilamentSeo\FilamentSeoServiceProvider;
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
@@ -19,7 +20,6 @@ use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use AloongJerr\FilamentSeo\FilamentSeoServiceProvider;
 
 class TestCase extends Orchestra
 {
