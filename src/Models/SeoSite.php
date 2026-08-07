@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property bool $is_default
  * @property bool $is_active
  * @property SeoSetting|null $setting
+ *
  * @method static active()
  * @method static default()
  */

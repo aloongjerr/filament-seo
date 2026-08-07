@@ -25,7 +25,6 @@ it('can resolve seo site by domain', function () {
 
 });
 
-
 it('falls back to default seo site when domain not found', function () {
 
     SeoSite::create([
@@ -44,7 +43,6 @@ it('falls back to default seo site when domain not found', function () {
         ->toBe('example.com');
 
 });
-
 
 it('does not resolve inactive seo site', function () {
 

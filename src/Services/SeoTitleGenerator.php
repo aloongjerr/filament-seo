@@ -2,8 +2,6 @@
 
 namespace AloongJerr\FilamentSeo\Services;
 
-use AloongJerr\FilamentSeo\Contracts\SeoTitleGenerator as SeoTitleGeneratorContract;
-
 class SeoTitleGenerator
 {
     public function __construct(

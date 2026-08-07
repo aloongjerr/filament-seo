@@ -1,6 +1,9 @@
 <?php
 
+use AloongJerr\FilamentSeo\Models\SeoSite;
+use Illuminate\Database\Eloquent\Model;
+
 it('can create seo site model', function () {
-    expect(new \AloongJerr\FilamentSeo\Models\SeoSite())
-        ->toBeInstanceOf(\Illuminate\Database\Eloquent\Model::class);
+    expect(new SeoSite)
+        ->toBeInstanceOf(Model::class);
 });
