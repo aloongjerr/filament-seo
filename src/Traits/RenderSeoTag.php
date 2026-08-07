@@ -6,7 +6,7 @@ use Illuminate\Support\HtmlString;
 
 trait RenderSeoTag
 {
-    protected string|null $value = null;
+    protected ?string $value = null;
 
     public function render(): HtmlString
     {
@@ -20,5 +20,6 @@ trait RenderSeoTag
     abstract protected function value(): string;
 
     abstract protected function tag(string $value): string;
+
     abstract protected function setValue(string $value): void;
 }
