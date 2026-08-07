@@ -4,8 +4,8 @@ namespace AloongJerr\FilamentSeo;
 
 use AloongJerr\FilamentSeo\Commands\FilamentSeoCommand;
 use AloongJerr\FilamentSeo\Contracts\SeoManager as SeoManagerContract;
+use AloongJerr\FilamentSeo\Renderer\SeoTitleTagRenderer;
 use AloongJerr\FilamentSeo\Services\SeoManager as SeoManagerService;
-use AloongJerr\FilamentSeo\Services\SeoTitleGenerator;
 use AloongJerr\FilamentSeo\Testing\TestsFilamentSeo;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Facades\FilamentAsset;
@@ -67,7 +67,7 @@ class FilamentSeoServiceProvider extends PackageServiceProvider
         $this->app->singleton(
             SeoManagerContract::class,
             fn (Application $app) => new SeoManagerService(
-                $app->make(SeoTitleGenerator::class)
+                $app->make(SeoTitleTagRenderer::class)
             )
         );
 

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('can generate title using seo settings', function () {
+it('can render seo title using seo settings', function () {
 
     $site = SeoSite::create([
         'name' => 'Main Site',
@@ -23,9 +23,11 @@ it('can generate title using seo settings', function () {
         'default_title' => 'Homepage',
     ]);
 
-    $title = app(SeoManagerContract::class)
-        ->title('Blog');
+    $html = app(SeoManagerContract::class)
+        ->title('Blog')
+        ->render();
 
-    expect($title)
-        ->toBe('My Site Blog Official');
+    expect($html->toHtml())
+        ->toContain('<title>')
+        ->toContain('My Site Blog Official');
 });
