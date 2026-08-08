@@ -3,7 +3,6 @@
 namespace AloongJerr\FilamentSeo\Tags;
 
 use AloongJerr\FilamentSeo\Enums\SeoTagType;
-use AloongJerr\FilamentSeo\Tags\AbstractSeoTag;
 use BackedEnum;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Contracts\Support\Htmlable;
@@ -11,7 +10,6 @@ use Illuminate\Support\HtmlString;
 
 class SeoCanonicalTag extends AbstractSeoTag
 {
-
     public function key(): BackedEnum
     {
         return SeoTagType::Canonical;

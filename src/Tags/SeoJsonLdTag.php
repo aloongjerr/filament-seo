@@ -3,14 +3,11 @@
 namespace AloongJerr\FilamentSeo\Tags;
 
 use AloongJerr\FilamentSeo\Enums\SeoTagType;
-use AloongJerr\FilamentSeo\Tags\AbstractGroupSeoTag;
 use BackedEnum;
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Support\HtmlString;
 
 class SeoJsonLdTag extends AbstractGroupSeoTag
 {
-
     public function key(): BackedEnum
     {
         return SeoTagType::JsonLd;

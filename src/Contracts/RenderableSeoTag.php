@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Htmlable;
 interface RenderableSeoTag
 {
     public function key(): BackedEnum;
+
     public function render(): Htmlable;
 
     public function isRenderable(): bool;

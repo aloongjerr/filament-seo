@@ -1,9 +1,7 @@
 <?php
 
-use AloongJerr\FilamentSeo\Filament\Forms\FilamentSeoForm;
 use AloongJerr\FilamentSeo\Tags\SeoOpenGraphTag;
 use AloongJerr\FilamentSeo\Tags\SeoTitleTag;
-use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 
 it('can get seo title form schema', function () {
@@ -25,5 +23,3 @@ it('can get seo open graph form schema', function () {
         ->and($schema[0])
         ->toBeInstanceOf(Section::class);
 });
-
-

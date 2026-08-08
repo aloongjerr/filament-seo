@@ -11,5 +11,4 @@ class SeoTitleCompiler implements SeoCompiler
     {
         return $tag->value();
     }
-
 }

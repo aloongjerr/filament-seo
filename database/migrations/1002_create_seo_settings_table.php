@@ -1,6 +1,5 @@
 <?php
 
-use AloongJerr\FilamentSeo\Enums\RobotsDirective;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 

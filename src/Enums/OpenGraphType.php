@@ -18,7 +18,7 @@ enum OpenGraphType: string implements HasLabel
     case VideoEpisode = 'video_episode';
     case VideoTvShow = 'video_tv_show';
 
-    public function getLabel(): string|Htmlable|null
+    public function getLabel(): string | Htmlable | null
     {
         return match ($this) {
             self::Website => __('Website'),

@@ -6,7 +6,6 @@ use AloongJerr\FilamentSeo\Commands\FilamentSeoCommand;
 use AloongJerr\FilamentSeo\Contracts\RenderableSeoTag;
 use AloongJerr\FilamentSeo\Contracts\SeoManager as SeoManagerContract;
 use AloongJerr\FilamentSeo\Contracts\SeoRenderer as SeoRendererContract;
-use AloongJerr\FilamentSeo\Contracts\SeoTag;
 use AloongJerr\FilamentSeo\Registry\SeoTagRegistry;
 use AloongJerr\FilamentSeo\Services\SeoManager;
 use AloongJerr\FilamentSeo\Services\SeoRenderer;

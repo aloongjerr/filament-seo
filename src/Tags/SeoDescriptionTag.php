@@ -4,7 +4,6 @@ namespace AloongJerr\FilamentSeo\Tags;
 
 use AloongJerr\FilamentSeo\Enums\SeoTagType;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
 use Illuminate\Support\HtmlString;
 
 class SeoDescriptionTag extends AbstractSeoTag

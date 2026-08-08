@@ -45,6 +45,7 @@ it('falls back to site seo setting when model has no seo value', function () {
 class TestSeoModel extends Model implements HasSeoContract
 {
     use HasSeo;
+
     protected $guarded = [];
 }
 

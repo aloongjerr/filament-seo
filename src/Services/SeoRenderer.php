@@ -5,7 +5,6 @@ namespace AloongJerr\FilamentSeo\Services;
 use AloongJerr\FilamentSeo\Contracts\RenderableSeoTag;
 use AloongJerr\FilamentSeo\Contracts\SeoRenderer as SeoRendererContract;
 use AloongJerr\FilamentSeo\Registry\SeoTagRegistry;
-use AloongJerr\FilamentSeo\Tags\AbstractSeoTag;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\HtmlString;
 

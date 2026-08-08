@@ -11,15 +11,12 @@ class SeoValueResolver
 {
     public function __construct(
         protected SeoSiteResolver $siteResolver,
-    )
-    {
-    }
+    ) {}
 
     public function resolve(
         Model $model,
-        BackedEnum|string $tag,
-    ): mixed
-    {
+        BackedEnum | string $tag,
+    ): mixed {
         $key = $this->normalizeKey($tag);
 
         if ($model instanceof HasSeo) {
@@ -42,7 +39,7 @@ class SeoValueResolver
         return $this->resolveSiteValue($key);
     }
 
-    protected function normalizeKey(BackedEnum|string $tag): string
+    protected function normalizeKey(BackedEnum | string $tag): string
     {
         return $tag instanceof BackedEnum
             ? FilamentSeo::normalizeKey($tag->value)
@@ -52,8 +49,7 @@ class SeoValueResolver
     protected function resolveModelValue(
         HasSeo $model,
         string $key,
-    ): mixed
-    {
+    ): mixed {
 
         return data_get($model->seoTags?->tags, $key);
     }

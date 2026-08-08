@@ -28,37 +28,21 @@ use Illuminate\Contracts\Support\Htmlable;
  */
 class SeoManager implements SeoManagerContract
 {
-    /**
-     * @param SeoTagRegistry $registry
-     * @param SeoRendererContract $renderer
-     */
     public function __construct(
         protected SeoTagRegistry $registry,
         protected SeoRendererContract $renderer,
     ) {}
 
-    /**
-     * @param BackedEnum|string $type
-     * @return RenderableSeoTag|null
-     */
     public function tag(BackedEnum | string $type): ?RenderableSeoTag
     {
         return $this->registry->get($type);
     }
 
-    /**
-     * @return Htmlable
-     */
     public function render(): Htmlable
     {
         return $this->renderer->render();
     }
 
-    /**
-     * @param string $method
-     * @param array $arguments
-     * @return RenderableSeoTag
-     */
     public function __call(string $method, array $arguments): RenderableSeoTag
     {
         $tag = $this->registry->getByMethod($method);
