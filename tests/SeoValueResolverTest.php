@@ -151,3 +151,120 @@ it('falls back to site seo setting when model default seo value is empty', funct
 
     expect($value)->toBe('Default Site Title');
 });
+
+it('uses model group seo value before site seo setting', function () {
+    $site = SeoSite::query()->create([
+        'name' => 'Main Website',
+        'domain' => request()->getHost(),
+        'is_active' => true,
+        'is_default' => true,
+    ]);
+
+    SeoSetting::query()->create([
+        'seo_site_id' => $site->id,
+        'tags' => [
+            'openGraph' => [
+                'title' => 'Default Site OG Title',
+                'description' => 'Default Site OG Description',
+            ],
+        ],
+    ]);
+
+    Schema::create('test_seo_models', function (Blueprint $table) {
+        $table->id();
+        $table->timestamps();
+    });
+
+    $model = TestSeoModel::query()->create([]);
+
+    $model->seoTags()->create([
+        'tags' => [
+            SeoTagType::OpenGraph->value => [
+                'title' => 'Blog Post OG Title',
+                'description' => 'Blog Post OG Description',
+            ],
+        ],
+    ]);
+
+    $value = app(SeoValueResolver::class)->resolve(
+        $model,
+        SeoTagType::OpenGraph,
+    );
+
+    expect($value)->toBe([
+        'title' => 'Blog Post OG Title',
+        'description' => 'Blog Post OG Description',
+    ]);
+});
+
+it('falls back to site group seo value when model group seo value is empty', function () {
+    $site = SeoSite::query()->create([
+        'name' => 'Main Website',
+        'domain' => request()->getHost(),
+        'is_active' => true,
+        'is_default' => true,
+    ]);
+
+    SeoSetting::query()->create([
+        'seo_site_id' => $site->id,
+        'tags' => [
+            'openGraph' => [
+                'title' => 'Default Site OG Title',
+                'description' => 'Default Site OG Description',
+            ],
+        ],
+    ]);
+
+    Schema::create('test_seo_models', function (Blueprint $table) {
+        $table->id();
+        $table->timestamps();
+    });
+
+    $model = TestSeoModel::query()->create([]);
+
+    $model->seoTags()->create([
+        'tags' => [],
+    ]);
+
+    $value = app(SeoValueResolver::class)->resolve(
+        $model,
+        SeoTagType::OpenGraph,
+    );
+
+    expect($value)->toBe([
+        'title' => 'Default Site OG Title',
+        'description' => 'Default Site OG Description',
+    ]);
+});
+
+it('returns null when model and site group seo values are empty', function () {
+    $site = SeoSite::query()->create([
+        'name' => 'Main Website',
+        'domain' => request()->getHost(),
+        'is_active' => true,
+        'is_default' => true,
+    ]);
+
+    SeoSetting::query()->create([
+        'seo_site_id' => $site->id,
+        'tags' => [],
+    ]);
+
+    Schema::create('test_seo_models', function (Blueprint $table) {
+        $table->id();
+        $table->timestamps();
+    });
+
+    $model = TestSeoModel::query()->create([]);
+
+    $model->seoTags()->create([
+        'tags' => [],
+    ]);
+
+    $value = app(SeoValueResolver::class)->resolve(
+        $model,
+        SeoTagType::OpenGraph,
+    );
+
+    expect($value)->toBeNull();
+});

@@ -1,10 +1,12 @@
 <?php
 
 use AloongJerr\FilamentSeo\Contracts\SeoManager as SeoManagerContract;
+use AloongJerr\FilamentSeo\Contracts\SeoRenderer as SeoRendererContract;
 use AloongJerr\FilamentSeo\Enums\SeoTagType;
 use AloongJerr\FilamentSeo\Models\SeoSetting;
 use AloongJerr\FilamentSeo\Models\SeoSite;
 use AloongJerr\FilamentSeo\Registry\SeoTagRegistry;
+use AloongJerr\FilamentSeo\Services\SeoManager;
 use AloongJerr\FilamentSeo\Tags\SeoOpenGraphTag;
 use AloongJerr\FilamentSeo\Tags\SeoTitleTag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -150,4 +152,24 @@ it('can resolve custom seo tag using normalized dynamic method', function () {
 
     expect(seo()->myCustomTag())
         ->toBe($tag);
+});
+
+it('can set seo model context on renderer', function () {
+    $model = new TestModel;
+
+    $renderer = Mockery::mock(SeoRendererContract::class);
+
+    $renderer
+        ->shouldReceive('model')
+        ->once()
+        ->with($model)
+        ->andReturnSelf();
+
+    $manager = new SeoManager(
+        app(SeoTagRegistry::class),
+        $renderer,
+    );
+
+    expect($manager->model($model))
+        ->toBe($manager);
 });

@@ -16,6 +16,7 @@ use AloongJerr\FilamentSeo\Tags\SeoTwitterCardTag;
 use BackedEnum;
 use BadMethodCallException;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method SeoTitleTag title()
@@ -41,6 +42,12 @@ class SeoManager implements SeoManagerContract
     public function render(): Htmlable
     {
         return $this->renderer->render();
+    }
+    public function model(Model $model): static
+    {
+        $this->renderer->model($model);
+
+        return $this;
     }
 
     public function __call(string $method, array $arguments): RenderableSeoTag

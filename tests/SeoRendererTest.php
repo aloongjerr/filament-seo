@@ -1,7 +1,10 @@
 <?php
 
+use AloongJerr\FilamentSeo\Contracts\SeoRenderer as SeoRendererContract;
 use AloongJerr\FilamentSeo\Enums\RobotsDirective;
 use AloongJerr\FilamentSeo\Enums\TwitterCardType;
+use AloongJerr\FilamentSeo\Models\SeoSetting;
+use AloongJerr\FilamentSeo\Models\SeoSite;
 use AloongJerr\FilamentSeo\Tags\SeoCanonicalTag;
 use AloongJerr\FilamentSeo\Tags\SeoDescriptionTag;
 use AloongJerr\FilamentSeo\Tags\SeoJsonLdTag;
@@ -9,6 +12,7 @@ use AloongJerr\FilamentSeo\Tags\SeoOpenGraphTag;
 use AloongJerr\FilamentSeo\Tags\SeoRobotsTag;
 use AloongJerr\FilamentSeo\Tags\SeoTitleTag;
 use AloongJerr\FilamentSeo\Tags\SeoTwitterCardTag;
+use Illuminate\Database\Schema\Blueprint;
 
 it('can set and retrieve seo tag value', function () {
 
@@ -334,4 +338,51 @@ it('is renderable when seo json ld has tags', function () {
             ->set('@type', 'WebSite')
             ->isRenderable()
     )->toBeTrue();
+});
+
+it('can set and retrieve seo model context', function () {
+    $model = new TestModel;
+
+    $renderer = app(SeoRendererContract::class);
+
+    expect($renderer->model($model))
+        ->toBe($renderer)
+        ->and($renderer->getModel())
+        ->toBe($model);
+});
+
+it('can render seo tag value from model context', function () {
+    $site = SeoSite::query()->create([
+        'name' => 'Main Website',
+        'domain' => request()->getHost(),
+        'is_active' => true,
+        'is_default' => true,
+    ]);
+
+    SeoSetting::query()->create([
+        'seo_site_id' => $site->id,
+        'tags' => [
+            'title' => 'Default Site Title',
+        ],
+    ]);
+
+    Schema::create('test_seo_models', function (Blueprint $table) {
+        $table->id();
+        $table->timestamps();
+    });
+
+    $model = TestSeoModel::query()->create([]);
+
+    $model->seoTags()->create([
+        'tags' => [
+            'title' => 'Blog Post Title',
+        ],
+    ]);
+
+    $html = app(SeoRendererContract::class)
+        ->model($model)
+        ->render()
+        ->toHtml();
+
+    expect($html)->toContain('<title>Blog Post Title</title>');
 });
