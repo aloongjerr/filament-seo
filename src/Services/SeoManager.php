@@ -43,6 +43,7 @@ class SeoManager implements SeoManagerContract
     {
         return $this->renderer->render();
     }
+
     public function model(Model $model): static
     {
         $this->renderer->model($model);
