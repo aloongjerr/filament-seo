@@ -21,14 +21,7 @@ return new class extends Migration
             $table->string('title_suffix')
                 ->nullable();
 
-            $table->string('default_title')
-                ->nullable();
-
-            $table->text('default_description')
-                ->nullable();
-
-            $table->enum('robots', RobotsDirective::cases())
-                ->default(RobotsDirective::INDEX_FOLLOW);
+            $table->json('tags')->nullable();
 
             $table->timestamps();
         });

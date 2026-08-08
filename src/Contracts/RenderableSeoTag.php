@@ -5,8 +5,10 @@ namespace AloongJerr\FilamentSeo\Contracts;
 use BackedEnum;
 use Illuminate\Contracts\Support\Htmlable;
 
-interface SeoManager
+interface RenderableSeoTag
 {
-    public function tag(BackedEnum | string $type): ?RenderableSeoTag;
+    public function key(): BackedEnum;
     public function render(): Htmlable;
+
+    public function isRenderable(): bool;
 }

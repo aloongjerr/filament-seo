@@ -2,7 +2,6 @@
 
 namespace AloongJerr\FilamentSeo\Models;
 
-use AloongJerr\FilamentSeo\Enums\RobotsDirective;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -10,9 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $seo_site_id
  * @property string|null $title_prefix
  * @property string|null $title_suffix
- * @property string|null $default_title
- * @property string|null $default_description
- * @property RobotsDirective $robots
+ * @property array $tags
  */
 class SeoSetting extends Model
 {
@@ -22,15 +19,13 @@ class SeoSetting extends Model
         'seo_site_id',
         'title_prefix',
         'title_suffix',
-        'default_title',
-        'default_description',
-        'robots',
+        'tags',
     ];
 
     protected function casts(): array
     {
         return [
-            'robots' => RobotsDirective::class,
+            'tags' => 'array',
         ];
     }
 

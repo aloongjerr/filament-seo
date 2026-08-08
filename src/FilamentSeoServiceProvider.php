@@ -3,9 +3,13 @@
 namespace AloongJerr\FilamentSeo;
 
 use AloongJerr\FilamentSeo\Commands\FilamentSeoCommand;
+use AloongJerr\FilamentSeo\Contracts\RenderableSeoTag;
 use AloongJerr\FilamentSeo\Contracts\SeoManager as SeoManagerContract;
-use AloongJerr\FilamentSeo\Renderer\SeoTitleTagRenderer;
-use AloongJerr\FilamentSeo\Services\SeoManager as SeoManagerService;
+use AloongJerr\FilamentSeo\Contracts\SeoRenderer as SeoRendererContract;
+use AloongJerr\FilamentSeo\Contracts\SeoTag;
+use AloongJerr\FilamentSeo\Registry\SeoTagRegistry;
+use AloongJerr\FilamentSeo\Services\SeoManager;
+use AloongJerr\FilamentSeo\Services\SeoRenderer;
 use AloongJerr\FilamentSeo\Testing\TestsFilamentSeo;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Facades\FilamentAsset;
@@ -63,18 +67,35 @@ class FilamentSeoServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
+        $this->app->scoped(
+            SeoTagRegistry::class,
+            function (Application $app) {
+                $registry = new SeoTagRegistry;
 
-        $this->app->singleton(
-            SeoManagerContract::class,
-            fn (Application $app) => new SeoManagerService(
-                $app->make(SeoTitleTagRenderer::class)
-            )
+                foreach (config('filament-seo.tags', []) as $key => $tagClass) {
+                    $tag = $app->make($tagClass);
+
+                    if (! $tag instanceof RenderableSeoTag) {
+                        continue;
+                    }
+
+                    $registry->register($tag, $key);
+                }
+
+                return $registry;
+            }
         );
 
-        $this->app->alias(
-            SeoManagerContract::class,
-            SeoManagerService::class
+        $this->app->scoped(
+            SeoRendererContract::class,
+            SeoRenderer::class
         );
+
+        $this->app->scoped(
+            SeoManagerContract::class,
+            SeoManager::class
+        );
+
     }
 
     public function packageBooted(): void
